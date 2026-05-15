@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 класс - Математическая галактика</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        header { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(30,60,114,0.95); 
+            backdrop-filter: blur(10px); 
+            z-index: 1000; 
+            padding: 1rem 0;
+        }
+        nav { 
+            max-width: 1200px; margin: 0 auto; 
+            display: flex; justify-content: space-between; 
+            align-items: center; padding: 0 2rem;
+        }
+        .logo { 
+            font-size: 1.8rem; font-weight: 900; 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .back-btn { 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            color: white; padding: 0.8rem 2rem; 
+            border-radius: 30px; font-weight: 700; 
+            text-decoration: none; box-shadow: 0 5px 15px rgba(255,107,53,0.4);
+            transition: all 0.3s;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,107,53,0.6); }
+        
+        .hero { 
+            min-height: 100vh; padding: 120px 2rem 4rem; 
+            text-align: center; max-width: 1200px; margin: 0 auto;
+        }
+        
+        /* 🔥 ЯРКИЙ ЗАГОЛОВОК 6 КЛАСС */
+        .class-title { 
+            font-size: 5.5rem; font-weight: 900; 
+            background: linear-gradient(45deg, #00ff88, #00cc6a, #00b359, #00ff41); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 3rem 0 5rem 0; 
+            text-shadow: 
+                0 0 20px rgba(0,255,136,0.8),
+                0 0 40px rgba(0,204,106,0.6),
+                4px 4px 10px rgba(0,0,0,0.7);
+            letter-spacing: 4px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { 
+                text-shadow: 
+                    0 0 20px rgba(0,255,136,0.8),
+                    0 0 40px rgba(0,204,106,0.6),
+                    4px 4px 10px rgba(0,0,0,0.7);
+            }
+            to { 
+                text-shadow: 
+                    0 0 30px rgba(0,255,136,1),
+                    0 0 60px rgba(0,204,106,0.8),
+                    6px 6px 15px rgba(0,0,0,0.8);
+            }
+        }
+        
+        /* ✅ 4x3 сетка для 12 тем */
+        .topics-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1.5rem; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .topic-btn { 
+            min-height: 120px; 
+            padding: 1rem; 
+            border-radius: 25px; 
+            font-weight: 800; 
+            font-size: 0.9rem; 
+            line-height: 1.2;
+            text-decoration: none; 
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+            color: #ffffff !important; 
+            text-shadow: 2px 2px 6px #000000 !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+            transition: all 0.4s;
+        }
+        .topic-btn::before { 
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); 
+            z-index: 0; border-radius: 25px;
+        }
+        .topic-btn > * { position: relative; z-index: 1; }
+        .topic-btn:hover { 
+            transform: translateY(-10px) scale(1.03); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .topic-icon { font-size: 2.2rem; margin-bottom: 0.4rem; }
+        
+        /* 12 уникальных цветов */
+        .topic1 { background: linear-gradient(135deg, #3498db, #5dade2); }
+        .topic2 { background: linear-gradient(135deg, #27ae60, #58d68d); }
+        .topic3 { background: linear-gradient(135deg, #e74c3c, #ec7063); }
+        .topic4 { background: linear-gradient(135deg, #f39c12, #f4b350); }
+        .topic5 { background: linear-gradient(135deg, #9b59b6, #bb8fce); }
+        .topic6 { background: linear-gradient(135deg, #1abc9c, #48c9b0); }
+        .topic7 { background: linear-gradient(135deg, #ff6b35, #f7a57c); }
+        .topic8 { background: linear-gradient(135deg, #34495e, #5d6d7e); }
+        .topic9 { background: linear-gradient(135deg, #e67e22, #eba572); }
+        .topic10 { background: linear-gradient(135deg, #00b894, #55efc4); }
+        .topic11 { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+        .topic12 { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        
+        @media (max-width: 768px) {
+            .topics-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+            .class-title { font-size: 3.8rem; }
+            .topic-btn { font-size: 0.85rem; min-height: 110px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">MathBlast</div>
+            <a href="kurs.html" class="back-btn">← Назад к курсам</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <!-- 🔥 ЗЕЛЁНЫЙ НЕОНОВЫЙ ЗАГОЛОВОК -->
+        <h1 class="class-title">6 КЛАСС</h1>
+
+        <!-- ✅ 12 Scratch-проектов 6 класса -->
+        <div class="topics-grid">
+            <a href="https://scratch.mit.edu/projects/1080667552" target="_blank" class="topic-btn topic1" title="Основное свойство дроби">
+                <div class="topic-icon">📏</div>
+                <div>Основное свойство<br>дроби</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080668342" target="_blank" class="topic-btn topic2" title="Сложение и вычитание дробей">
+                <div class="topic-icon">➕</div>
+                <div>Сложение дробей<br>одинаковые знаменатели</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080669139" target="_blank" class="topic-btn topic3" title="Сложение и вычитание смешанных чисел">
+                <div class="topic-icon">🔢</div>
+                <div>Смешанные<br>числа</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080669257" target="_blank" class="topic-btn topic4" title="Умножение обыкновенных дробей">
+                <div class="topic-icon">✕</div>
+                <div>Умножение<br>дробей</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080669363" target="_blank" class="topic-btn topic5" title="Деление обыкновенных дробей">
+                <div class="topic-icon">÷</div>
+                <div>Деление<br>дробей</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080669474" target="_blank" class="topic-btn topic6" title="Сравнение десятичных дробей">
+                <div class="topic-icon">⚖️</div>
+                <div>Сравнение<br>десятичных</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1080937636" target="_blank" class="topic-btn topic7" title="Сравнение, сложение и вычитание дробей">
+                <div class="topic-icon">🔄</div>
+                <div>Дроби разные<br>знаменатели</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1090481742" target="_blank" class="topic-btn topic8" title="Сложение десятичных дробей">
+                <div class="topic-icon">➕</div>
+                <div>Сложение<br>десятичных</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1090695391" target="_blank" class="topic-btn topic9" title="Признаки делимости">
+                <div class="topic-icon">🔢</div>
+                <div>Признаки<br>делимости</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1101290086" target="_blank" class="topic-btn topic10" title="Пропорция">
+                <div class="topic-icon">📏</div>
+                <div>Пропорция</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1118937677" target="_blank" class="topic-btn topic11" title="Координатная прямая">
+                <div class="topic-icon">📈</div>
+                <div>Координатная<br>прямая</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1122228804" target="_blank" class="topic-btn topic12" title="Модуль числа">
+                <div class="topic-icon">📏</div>
+                <div>Модуль числа</div>
+            </a>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Копилка заданий - Математическая галактика</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: #333;
+            padding-top: 100px;
+        }
+        
+        /* Шапка */
+        header { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(30,60,114,0.95); 
+            backdrop-filter: blur(10px); 
+            z-index: 1000; 
+            padding: 1rem 0;
+        }
+        nav { 
+            max-width: 1200px; margin: 0 auto; 
+            display: flex; justify-content: space-between; 
+            align-items: center; padding: 0 2rem;
+        }
+        .logo { 
+            font-size: 1.8rem; font-weight: 900; 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .back-btn { 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            color: white; padding: 0.8rem 2rem; 
+            border-radius: 30px; font-weight: 700; 
+            text-decoration: none; box-shadow: 0 5px 15px rgba(255,107,53,0.4);
+            transition: all 0.3s;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,107,53,0.6); }
+        
+        /* Этапы копилки */
+        .screen { 
+            min-height: 100vh; padding: 40px 2rem; 
+            max-width: 1200px; margin: 0 auto;
+            text-align: center;
+            display: none;
+        }
+        .screen.active { display: block; }
+        
+        /* ЭКРАН 1: Выбор класса (копилка больше не показывается) */
+        .class-title {
+            font-size: 4rem; font-weight: 900; color: white; 
+            margin-bottom: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .class-subtitle {
+            font-size: 1.5rem; color: #f0f0f0; margin-bottom: 4rem;
+            font-weight: 300;
+        }
+        
+        .class-buttons { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 2.5rem; 
+            max-width: 900px; 
+            margin: 0 auto 4rem;
+        }
+        .class-btn { 
+            min-height: 200px;
+            padding: 3rem;
+            border-radius: 35px;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.9);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+            transition: all 0.4s;
+        }
+        .class-btn::before { 
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1)); 
+            z-index: 0; border-radius: 35px;
+        }
+        .class-btn > * { position: relative; z-index: 1; }
+        .class-btn:hover { 
+            transform: translateY(-25px) scale(1.04); 
+            box-shadow: 0 45px 80px rgba(0,0,0,0.5);
+        }
+        
+        .class-icon { font-size: 5.5rem; margin-bottom: 1.2rem; }
+        .class-text { font-size: 2.8rem; line-height: 1.1; }
+        
+        /* Цвета классов */
+        .btn-5class { background: linear-gradient(135deg, #f1c40f, #f39c12, #e67e22); }
+        .btn-6class { background: linear-gradient(135deg, #27ae60, #2ecc71, #27ae60); }
+        .btn-7class { background: linear-gradient(135deg, #3498db, #2980b9, #1f618d); }
+        
+        /* ЭКРАН 2: Тема тренировки */
+        .topic-section { animation: slideIn 0.6s ease; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .class-name {
+            font-size: 2.5rem; font-weight: 800;
+            color: #ff6b35; margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .topic-title {
+            font-size: 3.2rem; font-weight: 900;
+            background: linear-gradient(45deg, #fff, #f8f9fa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 3.5rem; line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .topic-subtitle {
+            font-size: 1.6rem; color: #f0f0f0; 
+            margin-bottom: 4rem; font-weight: 300;
+        }
+        
+        .start-training {
+            background: linear-gradient(135deg, #e74c3c, #c0392b, #a93226); 
+            color: white; padding: 3.5rem 6rem; 
+            border-radius: 60px; font-weight: 900; font-size: 2.4rem; 
+            text-decoration: none; display: inline-block;
+            box-shadow: 0 30px 70px rgba(231,76,60,0.6);
+            transition: all 0.4s; margin: 2rem 0;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+        }
+        .start-training:hover {
+            transform: translateY(-12px) scale(1.06);
+            box-shadow: 0 50px 100px rgba(231,76,60,0.8);
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .nav-btn {
+            background: linear-gradient(135deg, #6c5ce7, #5a4fcf, #4834d4);
+            color: white; padding: 2.5rem 4rem;
+            border-radius: 35px; font-weight: 800; font-size: 1.6rem;
+            border: none; cursor: pointer;
+            box-shadow: 0 20px 50px rgba(108,92,231,0.5);
+            transition: all 0.4s;
+        }
+        .nav-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 70px rgba(108,92,231,0.7);
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .class-buttons, .nav-grid { grid-template-columns: 1fr; }
+            .class-icon { font-size: 5rem; }
+            .class-text { font-size: 2.5rem; }
+            .class-title { font-size: 3rem; }
+            .topic-title { font-size: 2.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">MathBlast</div>
+            <a href="index.html" class="back-btn">← На главную</a>
+        </nav>
+    </header>
+
+    <!-- ЭКРАН 1: Выбор класса (копилка убрана) -->
+    <section class="screen active" id="classSelection">
+        <h1 class="class-title">🏆 Копилка заданий</h1>
+        <p class="class-subtitle">Выберите класс для тренировки (по 10 карточек на каждую тему)</p>
+
+        <div class="class-buttons">
+            <button class="class-btn btn-5class" onclick="selectClass(5)">
+                <div class="class-icon">📚</div>
+                <div class="class-text">5 класс</div>
+            </button>
+            
+            <button class="class-btn btn-6class" onclick="selectClass(6)">
+                <div class="class-icon">📖</div>
+                <div class="class-text">6 класс</div>
+            </button>
+            
+            <button class="class-btn btn-7class" onclick="selectClass(7)">
+                <div class="class-icon">📘</div>
+                <div class="class-text">7 класс</div>
+            </button>
+        </div>
+    </section>
+
+    <!-- ЭКРАН 2: Тема тренировки -->
+    <section class="screen topic-section" id="topicSelection">
+        <div class="class-name" id="className"></div>
+        <div class="topic-title" id="topicTitle"></div>
+        <p class="topic-subtitle">Нажмите кнопку, чтобы начать решать 10 тренировочных карточек!</p>
+        
+        <a id="startTraining" class="start-training" target="_blank">🚀 Начать тренировку</a>
+        
+        <div class="nav-grid">
+            <button class="nav-btn" onclick="newTopic()">🎲 Новая тема</button>
+            <button class="nav-btn" onclick="showClassSelection()">🏫 Другой класс</button>
+        </div>
+    </section>
+
+    <script>
+        const TASK_BANK = {
+            5: [
+                {name: "Нахождение дроби от числа", url: "http://mathematicalgalaxy.tilda.ws/ndoth"},
+                {name: "Деление обыкновенных дробей", url: "http://mathematicalgalaxy.tilda.ws/dod"},
+                {name: "Сложение и вычитание десятичных дробей", url: "http://mathematicalgalaxy.tilda.ws/sivdd"},
+                {name: "Умножение десятичных дробей на натуральное число", url: "http://mathematicalgalaxy.tilda.ws/yddnnh"},
+                {name: "Деление десятичной дроби на натуральное число", url: "http://mathematicalgalaxy.tilda.ws/dddnnh"},
+                {name: "Признаки делимости", url: "http://mathematicalgalaxy.tilda.ws/prisnaki_delimosty"},
+                {name: "Умножение обыкновенных дробей", url: "http://mathematicalgalaxy.tilda.ws/yod"},
+                {name: "Сложение и вычитание обыкновенных дробей с разными знаменателями", url: "http://mathematicalgalaxy.tilda.ws/svpz"},
+                {name: "Сравнение обыкновенных дробей", url: "http://mathematicalgalaxy.tilda.ws/sod"},
+                {name: "Смешанные числа", url: "http://mathematicalgalaxy.tilda.ws/ch"}
+            ],
+            6: [
+                {name: "Признаки делимости", url: "http://mathematicalgalaxy.tilda.ws/prisnaki_delimosty"},
+                {name: "НОД", url: "http://mathematicalgalaxy.tilda.ws/hod"},
+                {name: "НОК", url: "http://mathematicalgalaxy.tilda.ws/hok"},
+                {name: "Приведение дробей к общему знаменателю", url: "http://mathematicalgalaxy.tilda.ws/poz"},
+                {name: "Сокращение дробей", url: "http://mathematicalgalaxy.tilda.ws/sk"},
+                {name: "Сложение и вычитание дробей с разными знаменателями", url: "http://mathematicalgalaxy.tilda.ws/svpz"},
+                {name: "Сложение и вычитание смешанных чисел", url: "http://mathematicalgalaxy.tilda.ws/smch"},
+                {name: "Умножение обыкновенных дробей", url: "http://mathematicalgalaxy.tilda.ws/yod"},
+                {name: "Нахождение дроби от числа", url: "http://mathematicalgalaxy.tilda.ws/ndoth"},
+                {name: "Деление обыкновенных дробей", url: "http://mathematicalgalaxy.tilda.ws/dod"}
+            ],
+            7: [
+                {name: "Линейная функция и её график", url: "http://mathematicalgalaxy.tilda.ws/linear"},
+                {name: "Уравнения с одной переменной", url: "http://mathematicalgalaxy.tilda.ws/uv"},
+                {name: "Системы уравнений", url: "http://mathematicalgalaxy.tilda.ws/su"},
+                {name: "Коэффициент наклона прямой", url: "http://mathematicalgalaxy.tilda.ws/knp"},
+                {name: "Пересечение прямых", url: "http://mathematicalgalaxy.tilda.ws/pp"},
+                {name: "Углы при пересечении прямых", url: "http://mathematicalgalaxy.tilda.ws/up"},
+                {name: "Параллельные прямые", url: "http://mathematicalgalaxy.tilda.ws/par"},
+                {name: "Перпендикулярные прямые", url: "http://mathematicalgalaxy.tilda.ws/perp"},
+                {name: "Квадратные уравнения", url: "http://mathematicalgalaxy.tilda.ws/kv"},
+                {name: "Графики функций", url: "http://mathematicalgalaxy.tilda.ws/gf"}
+            ]
+        };
+
+        let currentClass = null;
+        let currentTopic = null;
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showClassSelection() {
+            showScreen('classSelection');
+        }
+
+        function selectClass(classNum) {
+            currentClass = classNum;
+            const classNames = {5: '5 класс', 6: '6 класс', 7: '7 класс'};
+            document.getElementById('className').textContent = `📚 ${classNames[classNum]}`;
+            showScreen('topicSelection');
+            newTopic();
+        }
+
+        function newTopic() {
+            if (!currentClass) return;
+            currentTopic = TASK_BANK[currentClass][Math.floor(Math.random() * 10)];
+            document.getElementById('topicTitle').innerHTML = 
+                `${currentTopic.name}<br><span style="font-size: 0.45em; font-weight: 300; opacity: 0.9;">(10 тренировочных карточек)</span>`;
+            document.getElementById('startTraining').href = currentTopic.url;
+        }
+    </script>
+</body>
+</html>

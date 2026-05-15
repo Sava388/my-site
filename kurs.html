@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсы - Математическая галактика</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: #333;
+        }
+        
+        /* Шапка */
+        header { 
+            position: fixed; top: 0; width: 100%; 
+            background: rgba(30,60,114,0.95); 
+            backdrop-filter: blur(10px); 
+            z-index: 1000; 
+            padding: 1rem 0;
+        }
+        nav { 
+            max-width: 1200px; margin: 0 auto; 
+            display: flex; justify-content: space-between; 
+            align-items: center; padding: 0 2rem;
+        }
+        .logo { 
+            font-size: 1.8rem; font-weight: 900; 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .back-btn { 
+            background: linear-gradient(45deg, #ff6b35, #f7931e); 
+            color: white; padding: 0.8rem 2rem; 
+            border-radius: 30px; font-weight: 700; 
+            text-decoration: none; box-shadow: 0 5px 15px rgba(255,107,53,0.4);
+            transition: all 0.3s;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(255,107,53,0.6); }
+        
+        /* Главный экран */
+        .hero { 
+            min-height: 100vh; padding: 120px 2rem 4rem; 
+            text-align: center; max-width: 1200px; margin: 0 auto;
+        }
+        
+        /* Кнопка-копилка вверху */
+        .kopilka-top-btn { 
+            display: inline-flex; align-items: center; gap: 1rem; 
+            background: linear-gradient(135deg, #ff6b35, #f7931e); 
+            color: white; padding: 1.5rem 3rem; 
+            border-radius: 50px; font-weight: 800; font-size: 1.6rem; 
+            text-decoration: none; box-shadow: 0 15px 40px rgba(255,107,53,0.5);
+            transition: all 0.4s; margin-bottom: 4rem; display: inline-block;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+        .kopilka-top-btn:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 25px 50px rgba(255,107,53,0.7); 
+        }
+        .kopilka-pig { 
+            width: 70px; height: 70px; 
+            background: radial-gradient(circle at 30% 40%, #ffb3ba 0%, #ff8fab 50%, #ff69b4 100%);
+            border-radius: 50% 50% 60% 50% / 55% 55% 45% 45%;
+            position: relative; box-shadow: 0 10px 25px rgba(255,105,180,0.4);
+            animation: wiggle 2s infinite;
+        }
+        .kopilka-pig::before { 
+            content: '🐷'; font-size: 2.8rem; 
+            position: absolute; top: 20%; left: 50%; transform: translate(-50%,-20%);
+        }
+        @keyframes wiggle { 
+            0%, 100% { transform: rotate(0deg); } 
+            25% { transform: rotate(5deg); } 
+            75% { transform: rotate(-5deg); } 
+        }
+        
+        /* ✅ КНОПКИ КАК БЫЛО (размер не менялся) */
+        .buttons-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 2rem; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        .course-btn { 
+            min-height: 160px; /* КАК БЫЛО */
+            padding: 2rem; /* КАК БЫЛО */
+            border-radius: 30px; /* КАК БЫЛО */
+            font-weight: 900; 
+            text-decoration: none; 
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center;
+            text-shadow: 3px 3px 0 rgba(255,255,255,0.9);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+            position: relative; overflow: hidden;
+            transition: all 0.4s;
+        }
+        .course-btn::before { 
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1)); 
+            z-index: 0; border-radius: 30px;
+        }
+        .course-btn > * { position: relative; z-index: 1; }
+        .course-btn:hover { 
+            transform: translateY(-15px) scale(1.02); 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        
+        /* ✅ ТОЛЬКО ТЕКСТ БОЛЬШЕ */
+        .btn-icon { 
+            font-size: 4.2rem; /* +20% */
+            margin-bottom: 0.8rem; 
+        }
+        .btn-text { 
+            font-size: 2.3rem; /* БЫЛО 1.8rem → 2.3rem */
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+        }
+        .btn-text-long { 
+            font-size: 1.8rem; /* БЫЛО 1.6rem → 1.8rem */
+            line-height: 1.2;
+        }
+        
+        /* Цвета кнопок */
+        .btn-5class { background: linear-gradient(135deg, #f1c40f, #f39c12, #e67e22); }
+        .btn-6class { background: linear-gradient(135deg, #27ae60, #2ecc71, #27ae60); }
+        .btn-7class { background: linear-gradient(135deg, #3498db, #2980b9, #1f618d); }
+        .btn-video { background: linear-gradient(135deg, #e74c3c, #c0392b, #a93226); }
+        .btn-trainer { background: linear-gradient(135deg, #9b59b6, #8e44ad, #7d3c98); }
+        .btn-game { background: linear-gradient(135deg, #f39c12, #e67e22, #d68910); }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .buttons-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .btn-icon { font-size: 3.8rem; }
+            .btn-text { font-size: 2rem; }
+            .btn-text-long { font-size: 1.6rem; }
+            .kopilka-top-btn { flex-direction: column; gap: 0.5rem; padding: 2rem 2rem; font-size: 1.4rem; }
+            nav { flex-direction: column; gap: 1rem; padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">MathBlast</div>
+            <a href="index.html" class="back-btn">← На главную</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <!-- Кнопка-копилка вверху -->
+        <a href="kopilka-select.html" class="kopilka-top-btn">
+            <div class="kopilka-pig"></div>
+            <span>Копилка заданий</span>
+        </a>
+
+        <!-- 6 кнопок (размер как было, текст больше) -->
+        <div class="buttons-grid">
+            <a href="5сlass.html" class="course-btn btn-5class">
+                <div class="btn-icon">📚</div>
+                <div class="btn-text">5 класс</div>
+            </a>
+            
+            <a href="6class.html" class="course-btn btn-6class">
+                <div class="btn-icon">📖</div>
+                <div class="btn-text">6 класс</div>
+            </a>
+            
+            <a href="#" class="course-btn btn-7class">
+                <div class="btn-icon">📘</div>
+                <div class="btn-text">7 класс</div>
+            </a>
+            
+            <a href="video-select.html" class="course-btn btn-video">
+                <div class="btn-icon">🎥</div>
+                <div class="btn-text">Видеоуроки</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1093402402" class="course-btn btn-trainer">
+                <div class="btn-icon">⚡</div>
+                <div class="btn-text-long">Тренажёр таблицы<br>умножения</div>
+            </a>
+            
+            <a href="https://scratch.mit.edu/projects/1101071186" class="course-btn btn-game">
+                <div class="btn-icon">🎮</div>
+                <div class="btn-text-long">Игра таблица<br>умножения</div>
+            </a>
+        </div>
+    </section>
+</body>
+</html>
